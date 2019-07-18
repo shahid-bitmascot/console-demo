@@ -18,9 +18,9 @@ namespace Roslyn
 
                     class Test
                         {
-                            public void Print()
+                            public void Print(string str)
                             {
-                                Console.WriteLine(DateTime.Now);
+                                Console.WriteLine(""Lenght: "" + str.Length);
                             }
                         }
                     ";
@@ -51,10 +51,16 @@ namespace Roslyn
                 var a = AssemblyLoadContext.Default.LoadFromAssemblyPath(Path.GetFullPath(assemblyName));
                 var type = a.GetType("Test");
                 var instance = Activator.CreateInstance(type);
-                type.GetMethod("Print").Invoke(instance, null);
+
+                while (true)
+                {
+                    var input = Console.ReadLine();
+                    type.GetMethod("Print").Invoke(instance, new[] { input });
+                }
+
             }
 
-            Console.WriteLine("Hello World!");
+
         }
     }
 
