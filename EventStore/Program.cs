@@ -15,13 +15,14 @@ namespace EventStore
             conn.Disconnected += Conn_Disconnected;
             conn.ErrorOccurred += Conn_ErrorOccurred;
             conn.Closed += Conn_Closed;
-            conn.ConnectAsync().Wait();
 
             while (true)
             {
                 var msg = Console.ReadLine();
-                var data = new EventData(Guid.NewGuid(), "logs", false, Encoding.UTF8.GetBytes(msg), null);    
+                var data = new EventData(Guid.NewGuid(), "logs", false, Encoding.UTF8.GetBytes(msg), null);
+                conn.ConnectAsync().Wait();
                 conn.AppendToStreamAsync("logs", ExpectedVersion.Any, data).Wait();
+                conn.Close();
             }
         }
 
