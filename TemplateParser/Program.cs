@@ -7,11 +7,11 @@ namespace TemplateParser
     {
         static void Main(string[] args)
         {
-            var tt = "abc <%sss%> hello <%>world%>f%>";
+            var tt = "Name: {{Name}}, Email: {{ if Email == 'sahidul@bitmascot.com' }} Condition True {{ endif }}";
+            Console.WriteLine(tt);
             while (true)
             {
-                var p = new TemplateParser();
-                p.Delimiter = new TemplateDelimiter("<<", ">");
+                var p = new TemplateParser(new Delimiter("{{", "}}"));
                 p.Parse(tt);
                 tt = Console.ReadLine();
             }
